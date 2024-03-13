@@ -6,23 +6,27 @@ import { Menu, Search, Send } from 'lucide-react';
 import Image from 'next/image';
 
 function Header() {
-    const {user}: any = useKindeBrowserClient();
-    const {isSidebarOpen, setIsSidebarOpen} = useContext(FileListContext);
+  const { user }: any = useKindeBrowserClient();
+  const { isSidebarOpen, setIsSidebarOpen } = useContext(FileListContext);
 
-    // State to store whether the screen is mobile size
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  // Initially set isMobile to false, then update based on window size
+  const [isMobile, setIsMobile] = useState(false);
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640);
-        };
+  useEffect(() => {
+      // Define a function to update state based on window size
+      const handleResize = () => {
+          setIsMobile(window.innerWidth < 640);
+      };
 
-        // Add event listener
-        window.addEventListener('resize', handleResize);
+      // Set the initial value based on the current window size
+      handleResize();
 
-        // Remove event listener on cleanup
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+      // Add event listener
+      window.addEventListener('resize', handleResize);
+
+      // Remove event listener on cleanup
+      return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
     return (
         <div className='flex justify-end w-full gap-2 items-center'>
