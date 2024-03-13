@@ -14,39 +14,48 @@ function DashboardLayout(
         children: React.ReactNode;
       }>
 ) {
-    const convex=useConvex();
-    const {user}:any=useKindeBrowserClient();
-    const [fileList_,setFileList_]=useState();
-    const router=useRouter();
-    useEffect(()=>{
-        user&&checkTeam();
-    },[user])
+  const convex = useConvex();
+  const { user } = useKindeBrowserClient();
+  const [fileList_, setFileList_] = useState();
+  const router = useRouter();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to manage sidebar visibility
 
-    const checkTeam=async()=>{
-        const result=await convex.query(api.teams.getTeam,
-            {email:user?.email});
+  useEffect(() => {
+      if (user) {
+          checkTeam();
+      }
+  }, [user]);
 
-        if(!result?.length)
-        {
-            router.push('teams/create')
+  const checkTeam = async () => {
+      if (typeof user?.email === 'string') {
+        const result = await convex.query(api.teams.getTeam, { email: user.email });
+        if (!result?.length) {
+            router.push('teams/create');
         }
-    }
+      } else {
+        // Handle the scenario when user?.email is undefined
+        // You might want to redirect the user, show an error message, etc.
+        console.error('User email is undefined');
+      }
+  };
+
+
+
 
   return (
-    <div>
-      <FileListContext.Provider value={{fileList_,setFileList_}}>
-      <div className='grid grid-cols-4'>
-          <div className='bg-white h-screen w-72 fixed'>
-          <SideNav/>
-          </div>
-          <div className='col-span-4 ml-72'>
-          {children}
-          </div>
+      <div>
+          <FileListContext.Provider value={{ fileList_, setFileList_,isSidebarOpen,setIsSidebarOpen }}>
+              <div className='grid grid-cols-1 md:grid-cols-4'>
+                  <div className={`bg-white h-screen fixed w-72 ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>
+                      <SideNav />
+                  </div>
+                  <div className={`col-span-1 md:col-span-4 ${isSidebarOpen ? 'ml-72' : ''}`}>
+                      {children}
+                  </div>
+              </div>
+          </FileListContext.Provider>
       </div>
-      </FileListContext.Provider>
-     
-      </div>
-  )
+  );
 }
 
 export default DashboardLayout
