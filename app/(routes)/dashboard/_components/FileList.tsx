@@ -39,7 +39,7 @@ function FileList() {
     <div className='mt-10'>
  
 
-<div className="overflow-x-auto">
+<div >
   <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
     <thead className="ltr:text-left rtl:text-right">
       <tr>
@@ -47,7 +47,6 @@ function FileList() {
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Created At</td>
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Edited</td>
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Author</td>
-
       </tr>
     </thead>
 

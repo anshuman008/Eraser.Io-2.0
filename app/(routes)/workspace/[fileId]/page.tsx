@@ -20,27 +20,34 @@ function Workspace({params}:any) {
     const result=await convex.query(api.files.getFileById,{_id:params.fileId})
     setFileData(result);
   }
+
+     const [onyCanvas,setOnlyCanvas] = useState(false);
+
+       useEffect(()=>{
+         console.log(onyCanvas,'canvas value')  
+       },[onyCanvas])
   return (
     <div>
-      <WorkspaceHeader onSave={()=>setTriggerSave(!triggerSave)} />
+      <WorkspaceHeader fileData={fileData} onSave={()=>setTriggerSave(!triggerSave)} onyCanvas={onyCanvas} setOnlyCanvas={setOnlyCanvas} />
 
-      {/* Workspace Layout  */}
-      <div className='grid grid-cols-1
-      md:grid-cols-2'>
-        {/* Document  */}
-          <div className=' h-screen'>
+      {/* Workspace Layout with responsive grid */}
+      <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4'>
+        {/* Document with conditionally reduced width for larger screens */}
+        {!onyCanvas && (
+          <div className='md:col-span-1 lg:col-span-1 h-screen'>
             <Editor onSaveTrigger={triggerSave}
             fileId={params.fileId}
             fileData={fileData}
             />
           </div>
-        {/* Whiteboard/canvas  */}
-        <div className=' h-screen border-l'>
-            <Canvas
-             onSaveTrigger={triggerSave}
-             fileId={params.fileId}
-             fileData={fileData}
-            />
+        )}
+        {/* Whiteboard/canvas with conditional full space for larger screens */}
+        <div className={`${onyCanvas ? 'md:col-span-3 lg:col-span-4' : 'md:col-span-2 lg:col-span-3'} h-screen border-l`}>
+          <Canvas
+           onSaveTrigger={triggerSave}
+           fileId={params.fileId}
+           fileData={fileData}
+          />
         </div>
       </div>
     </div>

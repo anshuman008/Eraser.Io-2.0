@@ -86,7 +86,7 @@ function Editor({onSaveTrigger,fileId,fileData}:{onSaveTrigger:any,fileId:any,fi
     const onSaveDocument=()=>{
       if(ref.current)
       {
-        ref.current.save().then((outputData) => {
+   ref.current.save && ref.current.save().then((outputData) => {
           console.log('Article data: ', outputData);
           updateDocument({
             _id:fileId,

@@ -40,6 +40,7 @@ function Canvas({onSaveTrigger,fileId,fileData}:{onSaveTrigger:any,fileId:any,fi
             <MainMenu.DefaultItems.ClearCanvas/>
             <MainMenu.DefaultItems.SaveAsImage/>
             <MainMenu.DefaultItems.ChangeCanvasBackground/>
+            <MainMenu.DefaultItems.ToggleTheme />
         </MainMenu>
         <WelcomeScreen>
             <WelcomeScreen.Hints.MenuHint/>

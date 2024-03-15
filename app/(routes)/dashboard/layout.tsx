@@ -49,7 +49,7 @@ function DashboardLayout(
                   <div className={`bg-white h-screen fixed w-72 ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>
                       <SideNav />
                   </div>
-                  <div className={`col-span-1 md:col-span-4 ${isSidebarOpen ? 'ml-72' : ''}`}>
+                  <div className={`col-span-1 md:col-span-4 md:ml-72 ${isSidebarOpen ? 'ml-72' : ''}`}>
                       {children}
                   </div>
               </div>
